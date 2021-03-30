@@ -11,12 +11,13 @@
 
 #include "DIO.h"
 
-#define	LCD_MODE	4
+#define	LCD_MODE 4
 
 #if LCD_MODE == 4
 
 #define		LCD_4BIT_MODE_CMD_PORT		DIO_PORTB
 #define		LCD_4BIT_MODE_DATA_PORT		DIO_PORTA
+#define		LCD_4BIT_MODE_DATA_BUS		PORTA
 
 #define		LCD_RS_PIN		DIO_PIN_1
 #define		LCD_RW_PIN		DIO_PIN_2
@@ -26,6 +27,7 @@
 
 #define		LCD_8BIT_MODE_CMD_PORT		DIO_PORTA
 #define		LCD_8BIT_MODE_DATA_PORT		DIO_PORTB
+#define		LCD_8BIT_MODE_DATA_BUS		PORTB
 
 #define		LCD_RS_PIN		DIO_PIN_1
 #define		LCD_RW_PIN		DIO_PIN_2

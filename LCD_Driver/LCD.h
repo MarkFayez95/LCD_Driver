@@ -11,7 +11,7 @@
 
 #include "LCD_CFG.h"
 
-#define F_CPU	16000000
+#define F_CPU 16000000UL
 #include <util/delay.h>
 
 void LCD_Init (void);

@@ -14,10 +14,10 @@ void LCD_Init (void)
 	DIO_SetPinDir(LCD_4BIT_MODE_CMD_PORT, LCD_RW_PIN , DIO_PIN_OUTPUT);
 	DIO_SetPinDir(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN , DIO_PIN_OUTPUT);
 	
-	DIO_SetPinDir(LCD_4BIT_MODE_DATA_PORT, LCD_D4_PIN , DIO_PORT_OUTPUT);
-	DIO_SetPinDir(LCD_4BIT_MODE_DATA_PORT, LCD_D5_PIN , DIO_PORT_OUTPUT);
-	DIO_SetPinDir(LCD_4BIT_MODE_DATA_PORT, LCD_D6_PIN , DIO_PORT_OUTPUT);
-	DIO_SetPinDir(LCD_4BIT_MODE_DATA_PORT, LCD_D7_PIN , DIO_PORT_OUTPUT);
+	DIO_SetPinDir(LCD_4BIT_MODE_DATA_PORT, LCD_D4_PIN , DIO_PIN_OUTPUT);
+	DIO_SetPinDir(LCD_4BIT_MODE_DATA_PORT, LCD_D5_PIN , DIO_PIN_OUTPUT);
+	DIO_SetPinDir(LCD_4BIT_MODE_DATA_PORT, LCD_D6_PIN , DIO_PIN_OUTPUT);
+	DIO_SetPinDir(LCD_4BIT_MODE_DATA_PORT, LCD_D7_PIN , DIO_PIN_OUTPUT);
 	
 	_delay_ms(100);
 	
@@ -55,33 +55,34 @@ void LCD_WriteCommand (uint8 cmd)
 	
 	#if LCD_MODE == 4
 	
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_RS_PIN, DIO_PIN_LOW);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_RW_PIN, DIO_PIN_LOW);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_RS_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_RW_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
-	LCD_4BIT_MODE_DATA_PORT |= (cmd & 0xF0);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_HIGH);
+	LCD_4BIT_MODE_DATA_BUS = (cmd & 0xf0) | (LCD_4BIT_MODE_DATA_BUS & 0x0f);
+	
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_HIGH);
 	_delay_ms(1);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
-	LCD_4BIT_MODE_DATA_PORT |= (cmd << 4);
+	LCD_4BIT_MODE_DATA_BUS = (cmd << 4) | (LCD_4BIT_MODE_DATA_BUS & 0x0f);
 	
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_HIGH);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_HIGH);
 	_delay_ms(1);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
 	_delay_ms(5);
 	
 	#elif LCD_MODE == 8
 	
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_RS_PIN, DIO_PIN_LOW);
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_RW_PIN, DIO_PIN_LOW);
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_RS_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_RW_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
-	LCD_8BIT_MODE_DATA_PORT = cmd;
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_HIGH);
+	LCD_8BIT_MODE_DATA_BUS = cmd;
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_HIGH);
 	_delay_ms(1);
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
 	_delay_ms(5);
 	
@@ -92,39 +93,37 @@ void LCD_WriteChar (uint8 data)
 {
 	#if LCD_MODE == 4
 	
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_RS_PIN, DIO_PIN_HIGH);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_RW_PIN, DIO_PIN_LOW);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_RS_PIN, DIO_PIN_HIGH);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_RW_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
-	LCD_4BIT_MODE_DATA_PORT |= (data & 0xF0);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_HIGH);
+	LCD_4BIT_MODE_DATA_BUS = (data & 0xf0) | (LCD_4BIT_MODE_DATA_BUS & 0x0f);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_HIGH);
 	_delay_ms(1);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
-	LCD_4BIT_MODE_DATA_PORT |= (data << 4);
+	LCD_4BIT_MODE_DATA_BUS = (data << 4) | (LCD_4BIT_MODE_DATA_BUS & 0x0f);
 	
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_HIGH);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_HIGH);
 	_delay_ms(1);
-	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_4BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
 	_delay_ms(5);
 	
 	#elif LCD_MODE == 8
 	
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_RS_PIN, DIO_PIN_HIGH);
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_RW_PIN, DIO_PIN_LOW);
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_RS_PIN, DIO_PIN_HIGH);
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_RW_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
-	LCD_8BIT_MODE_DATA_PORT = data;
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_HIGH);
+	LCD_8BIT_MODE_DATA_BUS = data;
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_HIGH);
 	_delay_ms(1);
-	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT. LCD_E_PIN, DIO_PIN_LOW);
+	DIO_SetPinValue(LCD_8BIT_MODE_CMD_PORT, LCD_E_PIN, DIO_PIN_LOW);
 	
 	_delay_ms(5);
 	
 	#endif
-	
-	LCD_WriteCommand (0x06);
 	
 }
 
@@ -132,7 +131,31 @@ void LCD_WriteChar (uint8 data)
 /*  Assignment  */
 void LCD_WriteInteger (sint32 num)
 {
+	sint32 temp_num;
+	uint8 num_to_str[10]; // as maximum number that is represented by signed 32 bits is of 10 digits
+	uint8 counter = 0;
 	
+	if (num < 0)
+	{
+		LCD_WriteChar('-');
+		temp_num = num * -1;
+	}
+	else
+		temp_num = num;
+	
+	while (temp_num > 0 && counter < 10)
+	{
+		num_to_str[counter] = '0' + (uint8)(temp_num % 10);
+		temp_num /= 10;
+		counter++;
+	}
+	counter--;
+	while(counter>0)
+	{
+		LCD_WriteChar(num_to_str[counter]);
+		counter--;
+	}
+	LCD_WriteChar(num_to_str[0]);
 }
 /******************/
 
@@ -148,6 +171,9 @@ void LCD_WriteString(uint8* str)
 
 void LCD_GoToLocation(uint8 row, uint8 col)
 {
+	uint8 rows[2] = {0x80,0xc0};
+	
+	LCD_WriteCommand(rows[row]+col);
 	
 }
 
