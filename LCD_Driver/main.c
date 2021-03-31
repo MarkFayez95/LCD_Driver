@@ -79,8 +79,10 @@ int main(void)
 		{
 			LED_Toggle(LED0);
 			LCD_Clear();
-			LCD_WriteString("Button 0, Clicks +1");
-			_delay_ms(500);
+			LCD_WriteString("Button 0 pressed");
+			LCD_GoToLocation(1,0);
+			LCD_WriteString("Clicks +1");
+			_delay_ms(1000);
 			LED_Toggle(LED0);
 			LCD_Clear();
 			Clicks_Counter += 1;
@@ -90,8 +92,10 @@ int main(void)
 		{
 			LED_Toggle(LED1);
 			LCD_Clear();
-			LCD_WriteString("Button 1, Clicks +2");
-			_delay_ms(500);
+			LCD_WriteString("Button 1 pressed");
+			LCD_GoToLocation(1,0);
+			LCD_WriteString("Clicks +2");
+			_delay_ms(1000);
 			LED_Toggle(LED1);
 			LCD_Clear();
 			Clicks_Counter += 2;
@@ -101,8 +105,10 @@ int main(void)
 		{
 			LED_Toggle(LED2);
 			LCD_Clear();
-			LCD_WriteString("Button 2, Clicks +3");
-			_delay_ms(500);
+			LCD_WriteString("Button 2 pressed");
+			LCD_GoToLocation(1,0);
+			LCD_WriteString("Clicks +3");
+			_delay_ms(1000);
 			LED_Toggle(LED2);
 			LCD_Clear();
 			Clicks_Counter += 3;

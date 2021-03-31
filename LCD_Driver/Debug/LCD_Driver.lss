@@ -3,29 +3,29 @@ LCD_Driver.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000a48  00000000  00000000  00000074  2**1
+  0 .text         00000a78  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000060  00800060  00000a48  00000abc  2**0
+  1 .data         00000076  00800060  00000a78  00000aec  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  00000b1c  2**0
+  2 .comment      00000030  00000000  00000000  00000b62  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000b4c  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000b94  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000138  00000000  00000000  00000b88  2**0
+  4 .debug_aranges 00000138  00000000  00000000  00000bd0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00001d06  00000000  00000000  00000cc0  2**0
+  5 .debug_info   00001da2  00000000  00000000  00000d08  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000009a6  00000000  00000000  000029c6  2**0
+  6 .debug_abbrev 000009a6  00000000  00000000  00002aaa  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000e60  00000000  00000000  0000336c  2**0
+  7 .debug_line   00000e84  00000000  00000000  00003450  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000250  00000000  00000000  000041cc  2**2
+  8 .debug_frame  00000250  00000000  00000000  000042d4  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000543  00000000  00000000  0000441c  2**0
+  9 .debug_str    00000543  00000000  00000000  00004524  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000fc6  00000000  00000000  0000495f  2**0
+ 10 .debug_loc    00000fc6  00000000  00000000  00004a67  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 000000e8  00000000  00000000  00005925  2**0
+ 11 .debug_ranges 000000e8  00000000  00000000  00005a2d  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -65,16 +65,16 @@ Disassembly of section .text:
   60:	10 e0       	ldi	r17, 0x00	; 0
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	e8 e4       	ldi	r30, 0x48	; 72
+  66:	e8 e7       	ldi	r30, 0x78	; 120
   68:	fa e0       	ldi	r31, 0x0A	; 10
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
   6c:	05 90       	lpm	r0, Z+
   6e:	0d 92       	st	X+, r0
-  70:	a0 3c       	cpi	r26, 0xC0	; 192
+  70:	a6 3d       	cpi	r26, 0xD6	; 214
   72:	b1 07       	cpc	r27, r17
   74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
   76:	0e 94 a0 03 	call	0x740	; 0x740 <main>
-  7a:	0c 94 22 05 	jmp	0xa44	; 0xa44 <_exit>
+  7a:	0c 94 3a 05 	jmp	0xa74	; 0xa74 <_exit>
 
 0000007e <__bad_interrupt>:
   7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -988,7 +988,7 @@ void LCD_WriteInteger (sint32 num)
  618:	30 e0       	ldi	r19, 0x00	; 0
  61a:	40 e0       	ldi	r20, 0x00	; 0
  61c:	50 e0       	ldi	r21, 0x00	; 0
- 61e:	0e 94 e1 04 	call	0x9c2	; 0x9c2 <__divmodsi4>
+ 61e:	0e 94 f9 04 	call	0x9f2	; 0x9f2 <__divmodsi4>
  622:	e1 e0       	ldi	r30, 0x01	; 1
  624:	f0 e0       	ldi	r31, 0x00	; 0
  626:	ec 0f       	add	r30, r28
@@ -1463,218 +1463,242 @@ int main(void)
  8d4:	80 e0       	ldi	r24, 0x00	; 0
  8d6:	0e 94 59 00 	call	0xb2	; 0xb2 <Button_GetValue>
  8da:	81 30       	cpi	r24, 0x01	; 1
- 8dc:	f1 f4       	brne	.+60     	; 0x91a <__stack+0xbb>
+ 8dc:	31 f5       	brne	.+76     	; 0x92a <__stack+0xcb>
 		{
 			LED_Toggle(LED0);
  8de:	80 e0       	ldi	r24, 0x00	; 0
  8e0:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
 			LCD_Clear();
  8e4:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
-			LCD_WriteString("Button 0, Clicks +1");
+			LCD_WriteString("Button 0 pressed");
  8e8:	8b e7       	ldi	r24, 0x7B	; 123
  8ea:	90 e0       	ldi	r25, 0x00	; 0
  8ec:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
- 8f0:	2f ef       	ldi	r18, 0xFF	; 255
- 8f2:	89 e6       	ldi	r24, 0x69	; 105
- 8f4:	98 e1       	ldi	r25, 0x18	; 24
- 8f6:	21 50       	subi	r18, 0x01	; 1
- 8f8:	80 40       	sbci	r24, 0x00	; 0
- 8fa:	90 40       	sbci	r25, 0x00	; 0
- 8fc:	e1 f7       	brne	.-8      	; 0x8f6 <__stack+0x97>
- 8fe:	00 c0       	rjmp	.+0      	; 0x900 <__stack+0xa1>
- 900:	00 00       	nop
-			_delay_ms(500);
+			LCD_GoToLocation(1,0);
+ 8f0:	60 e0       	ldi	r22, 0x00	; 0
+ 8f2:	81 e0       	ldi	r24, 0x01	; 1
+ 8f4:	0e 94 57 03 	call	0x6ae	; 0x6ae <LCD_GoToLocation>
+			LCD_WriteString("Clicks +1");
+ 8f8:	8c e8       	ldi	r24, 0x8C	; 140
+ 8fa:	90 e0       	ldi	r25, 0x00	; 0
+ 8fc:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
+ 900:	2f ef       	ldi	r18, 0xFF	; 255
+ 902:	83 ed       	ldi	r24, 0xD3	; 211
+ 904:	90 e3       	ldi	r25, 0x30	; 48
+ 906:	21 50       	subi	r18, 0x01	; 1
+ 908:	80 40       	sbci	r24, 0x00	; 0
+ 90a:	90 40       	sbci	r25, 0x00	; 0
+ 90c:	e1 f7       	brne	.-8      	; 0x906 <__stack+0xa7>
+ 90e:	00 c0       	rjmp	.+0      	; 0x910 <__stack+0xb1>
+ 910:	00 00       	nop
+			_delay_ms(1000);
 			LED_Toggle(LED0);
- 902:	80 e0       	ldi	r24, 0x00	; 0
- 904:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
+ 912:	80 e0       	ldi	r24, 0x00	; 0
+ 914:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
 			LCD_Clear();
- 908:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
+ 918:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
 			Clicks_Counter += 1;
- 90c:	2f ef       	ldi	r18, 0xFF	; 255
- 90e:	c2 1a       	sub	r12, r18
- 910:	d2 0a       	sbc	r13, r18
- 912:	e2 0a       	sbc	r14, r18
- 914:	f2 0a       	sbc	r15, r18
+ 91c:	2f ef       	ldi	r18, 0xFF	; 255
+ 91e:	c2 1a       	sub	r12, r18
+ 920:	d2 0a       	sbc	r13, r18
+ 922:	e2 0a       	sbc	r14, r18
+ 924:	f2 0a       	sbc	r15, r18
 			Clicks_increment = 1;
- 916:	c1 e0       	ldi	r28, 0x01	; 1
- 918:	dd cf       	rjmp	.-70     	; 0x8d4 <__stack+0x75>
+ 926:	c1 e0       	ldi	r28, 0x01	; 1
+ 928:	d5 cf       	rjmp	.-86     	; 0x8d4 <__stack+0x75>
 		}
 		else if(Button_GetValue(BUTTON1) == 1)
- 91a:	81 e0       	ldi	r24, 0x01	; 1
- 91c:	0e 94 59 00 	call	0xb2	; 0xb2 <Button_GetValue>
- 920:	81 30       	cpi	r24, 0x01	; 1
- 922:	e9 f4       	brne	.+58     	; 0x95e <__stack+0xff>
+ 92a:	81 e0       	ldi	r24, 0x01	; 1
+ 92c:	0e 94 59 00 	call	0xb2	; 0xb2 <Button_GetValue>
+ 930:	81 30       	cpi	r24, 0x01	; 1
+ 932:	29 f5       	brne	.+74     	; 0x97e <__stack+0x11f>
 		{
 			LED_Toggle(LED1);
- 924:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
+ 934:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
 			LCD_Clear();
- 928:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
-			LCD_WriteString("Button 1, Clicks +2");
- 92c:	8f e8       	ldi	r24, 0x8F	; 143
- 92e:	90 e0       	ldi	r25, 0x00	; 0
- 930:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
- 934:	8f ef       	ldi	r24, 0xFF	; 255
- 936:	99 e6       	ldi	r25, 0x69	; 105
- 938:	28 e1       	ldi	r18, 0x18	; 24
- 93a:	81 50       	subi	r24, 0x01	; 1
- 93c:	90 40       	sbci	r25, 0x00	; 0
- 93e:	20 40       	sbci	r18, 0x00	; 0
- 940:	e1 f7       	brne	.-8      	; 0x93a <__stack+0xdb>
- 942:	00 c0       	rjmp	.+0      	; 0x944 <__stack+0xe5>
- 944:	00 00       	nop
-			_delay_ms(500);
-			LED_Toggle(LED1);
+ 938:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
+			LCD_WriteString("Button 1 pressed");
+ 93c:	86 e9       	ldi	r24, 0x96	; 150
+ 93e:	90 e0       	ldi	r25, 0x00	; 0
+ 940:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
+			LCD_GoToLocation(1,0);
+ 944:	60 e0       	ldi	r22, 0x00	; 0
  946:	81 e0       	ldi	r24, 0x01	; 1
- 948:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
+ 948:	0e 94 57 03 	call	0x6ae	; 0x6ae <LCD_GoToLocation>
+			LCD_WriteString("Clicks +2");
+ 94c:	87 ea       	ldi	r24, 0xA7	; 167
+ 94e:	90 e0       	ldi	r25, 0x00	; 0
+ 950:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
+ 954:	8f ef       	ldi	r24, 0xFF	; 255
+ 956:	93 ed       	ldi	r25, 0xD3	; 211
+ 958:	20 e3       	ldi	r18, 0x30	; 48
+ 95a:	81 50       	subi	r24, 0x01	; 1
+ 95c:	90 40       	sbci	r25, 0x00	; 0
+ 95e:	20 40       	sbci	r18, 0x00	; 0
+ 960:	e1 f7       	brne	.-8      	; 0x95a <__stack+0xfb>
+ 962:	00 c0       	rjmp	.+0      	; 0x964 <__stack+0x105>
+ 964:	00 00       	nop
+			_delay_ms(1000);
+			LED_Toggle(LED1);
+ 966:	81 e0       	ldi	r24, 0x01	; 1
+ 968:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
 			LCD_Clear();
- 94c:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
+ 96c:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
 			Clicks_Counter += 2;
- 950:	82 e0       	ldi	r24, 0x02	; 2
- 952:	c8 0e       	add	r12, r24
- 954:	d1 1c       	adc	r13, r1
- 956:	e1 1c       	adc	r14, r1
- 958:	f1 1c       	adc	r15, r1
+ 970:	82 e0       	ldi	r24, 0x02	; 2
+ 972:	c8 0e       	add	r12, r24
+ 974:	d1 1c       	adc	r13, r1
+ 976:	e1 1c       	adc	r14, r1
+ 978:	f1 1c       	adc	r15, r1
 			Clicks_increment = 1;
- 95a:	c1 e0       	ldi	r28, 0x01	; 1
- 95c:	bb cf       	rjmp	.-138    	; 0x8d4 <__stack+0x75>
+ 97a:	c1 e0       	ldi	r28, 0x01	; 1
+ 97c:	ab cf       	rjmp	.-170    	; 0x8d4 <__stack+0x75>
 		}
 		else if(Button_GetValue(BUTTON2) == 1)
- 95e:	82 e0       	ldi	r24, 0x02	; 2
- 960:	0e 94 59 00 	call	0xb2	; 0xb2 <Button_GetValue>
- 964:	81 30       	cpi	r24, 0x01	; 1
- 966:	f1 f4       	brne	.+60     	; 0x9a4 <__stack+0x145>
+ 97e:	82 e0       	ldi	r24, 0x02	; 2
+ 980:	0e 94 59 00 	call	0xb2	; 0xb2 <Button_GetValue>
+ 984:	81 30       	cpi	r24, 0x01	; 1
+ 986:	31 f5       	brne	.+76     	; 0x9d4 <__stack+0x175>
 		{
 			LED_Toggle(LED2);
- 968:	82 e0       	ldi	r24, 0x02	; 2
- 96a:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
+ 988:	82 e0       	ldi	r24, 0x02	; 2
+ 98a:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
 			LCD_Clear();
- 96e:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
-			LCD_WriteString("Button 2, Clicks +3");
- 972:	83 ea       	ldi	r24, 0xA3	; 163
- 974:	90 e0       	ldi	r25, 0x00	; 0
- 976:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
- 97a:	9f ef       	ldi	r25, 0xFF	; 255
- 97c:	29 e6       	ldi	r18, 0x69	; 105
- 97e:	88 e1       	ldi	r24, 0x18	; 24
- 980:	91 50       	subi	r25, 0x01	; 1
- 982:	20 40       	sbci	r18, 0x00	; 0
- 984:	80 40       	sbci	r24, 0x00	; 0
- 986:	e1 f7       	brne	.-8      	; 0x980 <__stack+0x121>
- 988:	00 c0       	rjmp	.+0      	; 0x98a <__stack+0x12b>
- 98a:	00 00       	nop
-			_delay_ms(500);
+ 98e:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
+			LCD_WriteString("Button 2 pressed");
+ 992:	81 eb       	ldi	r24, 0xB1	; 177
+ 994:	90 e0       	ldi	r25, 0x00	; 0
+ 996:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
+			LCD_GoToLocation(1,0);
+ 99a:	60 e0       	ldi	r22, 0x00	; 0
+ 99c:	81 e0       	ldi	r24, 0x01	; 1
+ 99e:	0e 94 57 03 	call	0x6ae	; 0x6ae <LCD_GoToLocation>
+			LCD_WriteString("Clicks +3");
+ 9a2:	82 ec       	ldi	r24, 0xC2	; 194
+ 9a4:	90 e0       	ldi	r25, 0x00	; 0
+ 9a6:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
+ 9aa:	9f ef       	ldi	r25, 0xFF	; 255
+ 9ac:	23 ed       	ldi	r18, 0xD3	; 211
+ 9ae:	80 e3       	ldi	r24, 0x30	; 48
+ 9b0:	91 50       	subi	r25, 0x01	; 1
+ 9b2:	20 40       	sbci	r18, 0x00	; 0
+ 9b4:	80 40       	sbci	r24, 0x00	; 0
+ 9b6:	e1 f7       	brne	.-8      	; 0x9b0 <__stack+0x151>
+ 9b8:	00 c0       	rjmp	.+0      	; 0x9ba <__stack+0x15b>
+ 9ba:	00 00       	nop
+			_delay_ms(1000);
 			LED_Toggle(LED2);
- 98c:	82 e0       	ldi	r24, 0x02	; 2
- 98e:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
+ 9bc:	82 e0       	ldi	r24, 0x02	; 2
+ 9be:	0e 94 8b 03 	call	0x716	; 0x716 <LED_Toggle>
 			LCD_Clear();
- 992:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
+ 9c2:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
 			Clicks_Counter += 3;
- 996:	93 e0       	ldi	r25, 0x03	; 3
- 998:	c9 0e       	add	r12, r25
- 99a:	d1 1c       	adc	r13, r1
- 99c:	e1 1c       	adc	r14, r1
- 99e:	f1 1c       	adc	r15, r1
+ 9c6:	93 e0       	ldi	r25, 0x03	; 3
+ 9c8:	c9 0e       	add	r12, r25
+ 9ca:	d1 1c       	adc	r13, r1
+ 9cc:	e1 1c       	adc	r14, r1
+ 9ce:	f1 1c       	adc	r15, r1
 			Clicks_increment = 1;
- 9a0:	c1 e0       	ldi	r28, 0x01	; 1
- 9a2:	98 cf       	rjmp	.-208    	; 0x8d4 <__stack+0x75>
+ 9d0:	c1 e0       	ldi	r28, 0x01	; 1
+ 9d2:	80 cf       	rjmp	.-256    	; 0x8d4 <__stack+0x75>
 		}
 		else if(Clicks_increment > 0)
- 9a4:	cc 23       	and	r28, r28
- 9a6:	09 f4       	brne	.+2      	; 0x9aa <__stack+0x14b>
- 9a8:	95 cf       	rjmp	.-214    	; 0x8d4 <__stack+0x75>
+ 9d4:	cc 23       	and	r28, r28
+ 9d6:	09 f4       	brne	.+2      	; 0x9da <__stack+0x17b>
+ 9d8:	7d cf       	rjmp	.-262    	; 0x8d4 <__stack+0x75>
 		{
 			LCD_Clear();
- 9aa:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
+ 9da:	0e 94 6f 03 	call	0x6de	; 0x6de <LCD_Clear>
 			LCD_WriteString("Clicks= ");
- 9ae:	87 eb       	ldi	r24, 0xB7	; 183
- 9b0:	90 e0       	ldi	r25, 0x00	; 0
- 9b2:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
+ 9de:	8c ec       	ldi	r24, 0xCC	; 204
+ 9e0:	90 e0       	ldi	r25, 0x00	; 0
+ 9e2:	0e 94 44 03 	call	0x688	; 0x688 <LCD_WriteString>
 			LCD_WriteInteger(Clicks_Counter);
- 9b6:	c7 01       	movw	r24, r14
- 9b8:	b6 01       	movw	r22, r12
- 9ba:	0e 94 e9 02 	call	0x5d2	; 0x5d2 <LCD_WriteInteger>
+ 9e6:	c7 01       	movw	r24, r14
+ 9e8:	b6 01       	movw	r22, r12
+ 9ea:	0e 94 e9 02 	call	0x5d2	; 0x5d2 <LCD_WriteInteger>
 			Clicks_increment = 0;
- 9be:	c0 e0       	ldi	r28, 0x00	; 0
- 9c0:	89 cf       	rjmp	.-238    	; 0x8d4 <__stack+0x75>
+ 9ee:	c0 e0       	ldi	r28, 0x00	; 0
+ 9f0:	71 cf       	rjmp	.-286    	; 0x8d4 <__stack+0x75>
 
-000009c2 <__divmodsi4>:
- 9c2:	05 2e       	mov	r0, r21
- 9c4:	97 fb       	bst	r25, 7
- 9c6:	1e f4       	brtc	.+6      	; 0x9ce <__divmodsi4+0xc>
- 9c8:	00 94       	com	r0
- 9ca:	0e 94 f8 04 	call	0x9f0	; 0x9f0 <__negsi2>
- 9ce:	57 fd       	sbrc	r21, 7
- 9d0:	07 d0       	rcall	.+14     	; 0x9e0 <__divmodsi4_neg2>
- 9d2:	0e 94 00 05 	call	0xa00	; 0xa00 <__udivmodsi4>
- 9d6:	07 fc       	sbrc	r0, 7
- 9d8:	03 d0       	rcall	.+6      	; 0x9e0 <__divmodsi4_neg2>
- 9da:	4e f4       	brtc	.+18     	; 0x9ee <__divmodsi4_exit>
- 9dc:	0c 94 f8 04 	jmp	0x9f0	; 0x9f0 <__negsi2>
+000009f2 <__divmodsi4>:
+ 9f2:	05 2e       	mov	r0, r21
+ 9f4:	97 fb       	bst	r25, 7
+ 9f6:	1e f4       	brtc	.+6      	; 0x9fe <__divmodsi4+0xc>
+ 9f8:	00 94       	com	r0
+ 9fa:	0e 94 10 05 	call	0xa20	; 0xa20 <__negsi2>
+ 9fe:	57 fd       	sbrc	r21, 7
+ a00:	07 d0       	rcall	.+14     	; 0xa10 <__divmodsi4_neg2>
+ a02:	0e 94 18 05 	call	0xa30	; 0xa30 <__udivmodsi4>
+ a06:	07 fc       	sbrc	r0, 7
+ a08:	03 d0       	rcall	.+6      	; 0xa10 <__divmodsi4_neg2>
+ a0a:	4e f4       	brtc	.+18     	; 0xa1e <__divmodsi4_exit>
+ a0c:	0c 94 10 05 	jmp	0xa20	; 0xa20 <__negsi2>
 
-000009e0 <__divmodsi4_neg2>:
- 9e0:	50 95       	com	r21
- 9e2:	40 95       	com	r20
- 9e4:	30 95       	com	r19
- 9e6:	21 95       	neg	r18
- 9e8:	3f 4f       	sbci	r19, 0xFF	; 255
- 9ea:	4f 4f       	sbci	r20, 0xFF	; 255
- 9ec:	5f 4f       	sbci	r21, 0xFF	; 255
+00000a10 <__divmodsi4_neg2>:
+ a10:	50 95       	com	r21
+ a12:	40 95       	com	r20
+ a14:	30 95       	com	r19
+ a16:	21 95       	neg	r18
+ a18:	3f 4f       	sbci	r19, 0xFF	; 255
+ a1a:	4f 4f       	sbci	r20, 0xFF	; 255
+ a1c:	5f 4f       	sbci	r21, 0xFF	; 255
 
-000009ee <__divmodsi4_exit>:
- 9ee:	08 95       	ret
+00000a1e <__divmodsi4_exit>:
+ a1e:	08 95       	ret
 
-000009f0 <__negsi2>:
- 9f0:	90 95       	com	r25
- 9f2:	80 95       	com	r24
- 9f4:	70 95       	com	r23
- 9f6:	61 95       	neg	r22
- 9f8:	7f 4f       	sbci	r23, 0xFF	; 255
- 9fa:	8f 4f       	sbci	r24, 0xFF	; 255
- 9fc:	9f 4f       	sbci	r25, 0xFF	; 255
- 9fe:	08 95       	ret
+00000a20 <__negsi2>:
+ a20:	90 95       	com	r25
+ a22:	80 95       	com	r24
+ a24:	70 95       	com	r23
+ a26:	61 95       	neg	r22
+ a28:	7f 4f       	sbci	r23, 0xFF	; 255
+ a2a:	8f 4f       	sbci	r24, 0xFF	; 255
+ a2c:	9f 4f       	sbci	r25, 0xFF	; 255
+ a2e:	08 95       	ret
 
-00000a00 <__udivmodsi4>:
- a00:	a1 e2       	ldi	r26, 0x21	; 33
- a02:	1a 2e       	mov	r1, r26
- a04:	aa 1b       	sub	r26, r26
- a06:	bb 1b       	sub	r27, r27
- a08:	fd 01       	movw	r30, r26
- a0a:	0d c0       	rjmp	.+26     	; 0xa26 <__udivmodsi4_ep>
+00000a30 <__udivmodsi4>:
+ a30:	a1 e2       	ldi	r26, 0x21	; 33
+ a32:	1a 2e       	mov	r1, r26
+ a34:	aa 1b       	sub	r26, r26
+ a36:	bb 1b       	sub	r27, r27
+ a38:	fd 01       	movw	r30, r26
+ a3a:	0d c0       	rjmp	.+26     	; 0xa56 <__udivmodsi4_ep>
 
-00000a0c <__udivmodsi4_loop>:
- a0c:	aa 1f       	adc	r26, r26
- a0e:	bb 1f       	adc	r27, r27
- a10:	ee 1f       	adc	r30, r30
- a12:	ff 1f       	adc	r31, r31
- a14:	a2 17       	cp	r26, r18
- a16:	b3 07       	cpc	r27, r19
- a18:	e4 07       	cpc	r30, r20
- a1a:	f5 07       	cpc	r31, r21
- a1c:	20 f0       	brcs	.+8      	; 0xa26 <__udivmodsi4_ep>
- a1e:	a2 1b       	sub	r26, r18
- a20:	b3 0b       	sbc	r27, r19
- a22:	e4 0b       	sbc	r30, r20
- a24:	f5 0b       	sbc	r31, r21
+00000a3c <__udivmodsi4_loop>:
+ a3c:	aa 1f       	adc	r26, r26
+ a3e:	bb 1f       	adc	r27, r27
+ a40:	ee 1f       	adc	r30, r30
+ a42:	ff 1f       	adc	r31, r31
+ a44:	a2 17       	cp	r26, r18
+ a46:	b3 07       	cpc	r27, r19
+ a48:	e4 07       	cpc	r30, r20
+ a4a:	f5 07       	cpc	r31, r21
+ a4c:	20 f0       	brcs	.+8      	; 0xa56 <__udivmodsi4_ep>
+ a4e:	a2 1b       	sub	r26, r18
+ a50:	b3 0b       	sbc	r27, r19
+ a52:	e4 0b       	sbc	r30, r20
+ a54:	f5 0b       	sbc	r31, r21
 
-00000a26 <__udivmodsi4_ep>:
- a26:	66 1f       	adc	r22, r22
- a28:	77 1f       	adc	r23, r23
- a2a:	88 1f       	adc	r24, r24
- a2c:	99 1f       	adc	r25, r25
- a2e:	1a 94       	dec	r1
- a30:	69 f7       	brne	.-38     	; 0xa0c <__udivmodsi4_loop>
- a32:	60 95       	com	r22
- a34:	70 95       	com	r23
- a36:	80 95       	com	r24
- a38:	90 95       	com	r25
- a3a:	9b 01       	movw	r18, r22
- a3c:	ac 01       	movw	r20, r24
- a3e:	bd 01       	movw	r22, r26
- a40:	cf 01       	movw	r24, r30
- a42:	08 95       	ret
+00000a56 <__udivmodsi4_ep>:
+ a56:	66 1f       	adc	r22, r22
+ a58:	77 1f       	adc	r23, r23
+ a5a:	88 1f       	adc	r24, r24
+ a5c:	99 1f       	adc	r25, r25
+ a5e:	1a 94       	dec	r1
+ a60:	69 f7       	brne	.-38     	; 0xa3c <__udivmodsi4_loop>
+ a62:	60 95       	com	r22
+ a64:	70 95       	com	r23
+ a66:	80 95       	com	r24
+ a68:	90 95       	com	r25
+ a6a:	9b 01       	movw	r18, r22
+ a6c:	ac 01       	movw	r20, r24
+ a6e:	bd 01       	movw	r22, r26
+ a70:	cf 01       	movw	r24, r30
+ a72:	08 95       	ret
 
-00000a44 <_exit>:
- a44:	f8 94       	cli
+00000a74 <_exit>:
+ a74:	f8 94       	cli
 
-00000a46 <__stop_program>:
- a46:	ff cf       	rjmp	.-2      	; 0xa46 <__stop_program>
+00000a76 <__stop_program>:
+ a76:	ff cf       	rjmp	.-2      	; 0xa76 <__stop_program>
