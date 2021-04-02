@@ -133,7 +133,7 @@ void LCD_WriteInteger (sint32 num)
 {
 	sint32 temp_num;
 	uint8 num_to_str[10]; // as maximum number that is represented by signed 32 bits is of 10 digits
-	sint8 counter = 0;
+	sint8 counter = 0; // adjusting variable to be signed solve the last loop going infinite
 	
 	if (num < 0)
 	{
