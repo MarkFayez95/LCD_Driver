@@ -56,6 +56,10 @@ int main(void)
 	LED_Toggle(LED2);
 	
 	LCD_Clear();
+	LCD_WriteString("Clicks= ");
+	LCD_WriteInteger(Clicks_Counter);
+	_delay_ms(1000);
+	LCD_Clear();
 	LCD_WriteString("Press any Button!");
 	
 	LED_Toggle(LED0);

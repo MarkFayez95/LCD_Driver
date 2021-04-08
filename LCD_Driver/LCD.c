@@ -158,7 +158,7 @@ void LCD_WriteInteger (sint32 num)
 		counter--;
 		while(counter>=0)
 		{
-			LCD_WriteChar('0' + (increment_temp_num % 10));
+			LCD_WriteChar('0' + (increment_temp_num % 10) );
 			increment_temp_num /= 10;
 			counter--;
 		}
