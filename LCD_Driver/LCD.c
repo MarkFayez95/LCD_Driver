@@ -132,7 +132,7 @@ void LCD_WriteChar (uint8 data)
 void LCD_WriteInteger (sint32 num)
 {
 	sint32 temp_num;
-	uint8 num_to_str[10]; // as maximum number that is represented by signed 32 bits is of 10 digits
+	uint16 increment_temp_num = 0;
 	sint8 counter = 0; // adjusting variable to be signed solve the last loop going infinite
 	
 	if (num < 0)
@@ -143,17 +143,25 @@ void LCD_WriteInteger (sint32 num)
 	else
 		temp_num = num;
 	
-	while (temp_num > 0 && counter < 10)
+	if(temp_num == 0)
 	{
-		num_to_str[counter] = '0' + (uint8)(temp_num % 10);
-		temp_num /= 10;
-		counter++;
+		LCD_WriteChar('0');
 	}
-	counter--;
-	while(counter>=0)
+	else
 	{
-		LCD_WriteChar(num_to_str[counter]);
+		while (temp_num > 0 && counter < 10)
+		{
+			increment_temp_num = ((increment_temp_num * 10) + (temp_num % 10));
+			temp_num /= 10;
+			counter++;
+		}
 		counter--;
+		while(counter>=0)
+		{
+			LCD_WriteChar('0' + (increment_temp_num % 10));
+			increment_temp_num /= 10;
+			counter--;
+		}
 	}
 }
 /******************/
